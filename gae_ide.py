@@ -34,6 +34,15 @@ class MainPage(webapp.RequestHandler):
     path = os.path.join(os.path.dirname(__file__), 'index.html')
     self.response.out.write(template.render(path, template_values))
     
+class EditPage(webapp.RequestHandler):
+  def get(self):
+    my_id = self.request.get('id');
+    my_file = File.get_by_id(int(my_id))
+    template_values = {
+      'file': my_file
+    }
+    path = os.path.join(os.path.dirname(__file__), 'edit.html')
+    self.response.out.write(template.render(path, template_values))
 
 class Gae_Ide(webapp.RequestHandler):
   def post(self):
@@ -49,7 +58,8 @@ class Gae_Ide(webapp.RequestHandler):
 
 application = webapp.WSGIApplication(
                                      [('/', MainPage),
-                                      ('/sign', Gae_Ide)],
+                                      ('/sign', Gae_Ide),
+                                      ('/edit', EditPage)],
                                      debug=True)
 
 def main():

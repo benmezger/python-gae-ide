@@ -4,13 +4,7 @@
   </head>
   <body>
     {% for file in files %}
-      {% if file.author %}
-        <b>{{ file.author.nickname }}</b> wrote:
-      {% else %}
-       An anonymous person wrote:
-      {% endif %}
       <h3>{{ file.file_name }}</h3>
-      <blockquote>{{ file.content|escape }}</blockquote>
     {% endfor %}
 
     <form action="/sign" method="post">

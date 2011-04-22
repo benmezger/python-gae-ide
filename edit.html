@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+  </head>
+  <body>
+
+    <form action="/sign" method="post">
+      <div><input type="text" name="file_name" value="{{ file.file_name }}"></div>
+      <div><textarea name="content" rows="10" cols="60">
+	{{ file.content }}
+	</textarea></div>
+      <div><input type="submit" value="Save"></div>
+    </form>
+  </body>
+</html>
