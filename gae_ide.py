@@ -36,10 +36,12 @@ class MainPage(webapp.RequestHandler):
     
 class EditPage(webapp.RequestHandler):
   def get(self):
-    my_id = self.request.get('id');
+    my_id = self.request.get('id')
     my_file = File.get_by_id(int(my_id))
+    out = eval(my_file.content)
     template_values = {
-      'file': my_file
+      'file': my_file,
+      'output': out
     }
     path = os.path.join(os.path.dirname(__file__), 'edit.html')
     self.response.out.write(template.render(path, template_values))
