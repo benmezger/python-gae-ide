@@ -43,7 +43,8 @@ class EditPage(webapp.RequestHandler):
         my_file = File.get_by_id(int(my_id))
     
     try:
-      out = eval(my_file.content)
+      content = my_file.content.strip()
+      out = eval(content)
       exception = 'No error found, try harder'
     except Exception, e:
       exception = e
