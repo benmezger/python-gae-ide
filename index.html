@@ -4,7 +4,7 @@
   </head>
   <body>
     {% for file in files %}
-      <h3>{{ file.file_name }}</h3>
+     <a href="/edit?id={{ file.id }}"> <h3>{{ file.file_name }}</h3> </a>
     {% endfor %}
 
     <a href="{{ url }}">{{ url_linktext }}</a>

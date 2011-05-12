@@ -19,7 +19,8 @@ class MainPage(webapp.RequestHandler):
   def get(self):
     files_query = File.all().order('-creation_date')
     files = files_query.fetch(10)
-
+    for f in files:
+      f.id = f.key().id()
     if users.get_current_user():
       url = users.create_logout_url(self.request.uri)
       url_linktext = 'Logout'
