@@ -1,5 +1,7 @@
 import cgi
 import os
+import sys
+import StringIO
 
 from google.appengine.api import users
 from google.appengine.ext import webapp
@@ -41,14 +43,25 @@ class EditPage(webapp.RequestHandler):
         my_file = File()
     else:
         my_file = File.get_by_id(int(my_id))
+
+    SAVEDOUT = sys.stdout
     
     try:
       content = my_file.content.strip()
-      out = eval(content)
+      capture = StringIO.StringIO()
+      sys.stdout = capture
+      
+      exec(content)
+
+      out = str(capture.getvalue())
+
+      
       exception = 'No error found, try harder'
     except Exception, e:
       exception = e
-      out = 'Foute boel'
+      out = 'Exception occurred see below'
+    finally:
+      sys.stdout = SAVEDOUT
       
     template_values = {
       'id': my_id,
