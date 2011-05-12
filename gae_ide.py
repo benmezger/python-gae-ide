@@ -72,7 +72,7 @@ class Gae_Ide(webapp.RequestHandler):
      my_file.content = self.request.get('content')
      my_file.file_name = self.request.get('file_name')
      my_file.put()
-     self.redirect('/edit?id=' + my_id)
+     self.redirect('/edit?id=' + str(my_file.key().id()))
 
 application = webapp.WSGIApplication(
                                      [('/', MainPage),
