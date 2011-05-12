@@ -37,26 +37,42 @@ class MainPage(webapp.RequestHandler):
 class EditPage(webapp.RequestHandler):
   def get(self):
     my_id = self.request.get('id')
-    my_file = File.get_by_id(int(my_id))
-    out = eval(my_file.content)
+    if my_id == 'new':
+        my_file = File()
+    else:
+        my_file = File.get_by_id(int(my_id))
+    
+    try:
+      out = eval(my_file.content)
+      exception = 'No error found, try harder'
+    except Exception, e:
+      exception = e
+      out = 'Foute boel'
+      
     template_values = {
+      'id': my_id,
       'file': my_file,
-      'output': out
+      'output': out,
+      'exception': exception
     }
     path = os.path.join(os.path.dirname(__file__), 'edit.html')
     self.response.out.write(template.render(path, template_values))
 
 class Gae_Ide(webapp.RequestHandler):
   def post(self):
-    my_file = File()
+     my_id = self.request.get('id')
+     if my_id == 'new':
+       
+       my_file = File()
+     else:
+        my_file = File.get_by_id(int(my_id))
+     if users.get_current_user():
+       my_file.author = users.get_current_user()
 
-    if users.get_current_user():
-      my_file.author = users.get_current_user()
-
-    my_file.content = self.request.get('content')
-    my_file.file_name = self.request.get('file_name')
-    my_file.put()
-    self.redirect('/')
+     my_file.content = self.request.get('content')
+     my_file.file_name = self.request.get('file_name')
+     my_file.put()
+     self.redirect('/edit?id=' + my_id)
 
 application = webapp.WSGIApplication(
                                      [('/', MainPage),

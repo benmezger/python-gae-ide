@@ -7,12 +7,6 @@
       <h3>{{ file.file_name }}</h3>
     {% endfor %}
 
-    <form action="/sign" method="post">
-      <div><input type="text" name="file_name" cols="60"></input></div>
-      <div><textarea name="content" rows="3" cols="60"></textarea></div>
-      <div><input type="submit" value="Save your script"></div>
-    </form>
-
     <a href="{{ url }}">{{ url_linktext }}</a>
 
   </body>

@@ -5,12 +5,14 @@
   <body>
 
     <form action="/sign" method="post">
-      <div><input type="text" name="file_name" value="{{ file.file_name }}"></div>
-      <div><textarea name="content" rows="10" cols="60">
-	{{ file.content }}
-	</textarea></div>
+      <div><input type="hidden" value="{{ id }}" name="id"></input>
+      <input type="text" name="file_name" value="{{ file.file_name }}"></div>
+      <div><textarea name="content" rows="10" cols="60">{{ file.content }}</textarea></div>
       <div><textarea name="output" rows="10" cols="60">
       {{ output }}
+      </textarea></div>
+      <div><textarea name="error" rows="10" cols="60">
+      {{ exception }}
       </textarea></div>
       <div><input type="submit" value="Save"></div>
     </form>
