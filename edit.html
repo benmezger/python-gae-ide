@@ -2,15 +2,24 @@
   <head>
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
   </head>
-  <body>
-
+  <body style="background-color:#FFFFFF;">
+    
+    <h1 style="text-align:center;">Python Playground</h1>
+    <p style="text-align:center;"> <i>Code, run and play</i></p>
     <form action="/sign" method="post">
-      <div><input type="hidden" value="{{ id }}" name="id"></input>
+      <div>Filename<input type="hidden" value="{{ id }}" name="id"></input>
       <input type="text" name="file_name" value="{{ file.file_name }}"></div>
-      <div><textarea name="content" rows="10" cols="60">{{ file.content }}</textarea></div>
+     <p>Code:</p> 
+     <div><textarea name="content" rows="10" cols="60">{{ file.content }}</textarea></div>
+      <p>Result:</p>
       <div><textarea name="output" rows="10" cols="60">{{ output }}</textarea></div>
+      <p>Exceptions:</p>
       <div><textarea name="error" rows="10" cols="60">{{ exception }}</textarea></div>
-      <div><input type="submit" value="Save"></div>
+      <div><input type="submit" value="Save and go!"></div>
+      <a style="float:right" href="http://docs.python.org/index.html" target="_blank">Python Docs</a>
+      <address> Written by:<br />
+      Steven Speek and Benjamin Mezger<br />
+      2011</address>
     </form>
   </body>
 </html>
