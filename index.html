@@ -2,12 +2,22 @@
   <head>
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
   </head>
+  <body style="background-color:#FFFFFF;">
   <body>
+    <h1 style="text-align:center;">Python Playground</h1>
+    <p style="text-align:center;"> <i>Code, run and play</i></p>
+    <hr/>
     {% for file in files %}
      <a href="/edit?id={{ file.id }}"> <h3>{{ file.file_name }}</h3> </a>
     {% endfor %}
 
     <a href="{{ url }}">{{ url_linktext }}</a>
+      <br/>
+      <br/>
+      <hr/>
+      <address> Written by:<br />
+      <a href="https://profiles.google.com/slspeek/about" target="_blank">Steven Speek</a> and <a href="http://ephexeve.blogspot.com/" target="_blank">Benjamin Mezger</a><br />
+      2011</address>    
 
   </body>
 </html>

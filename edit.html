@@ -6,6 +6,7 @@
     
     <h1 style="text-align:center;">Python Playground</h1>
     <p style="text-align:center;"> <i>Code, run and play</i></p>
+    <hr/>       
     <form action="/sign" method="post">
       <div>Filename<input type="hidden" value="{{ id }}" name="id"></input>
       <input type="text" name="file_name" value="{{ file.file_name }}"></div>
@@ -16,9 +17,10 @@
       <p>Exceptions:</p>
       <div><textarea name="error" rows="10" cols="60">{{ exception }}</textarea></div>
       <div><input type="submit" value="Save and go!"></div>
+      <hr/>	
       <a style="float:right" href="http://docs.python.org/index.html" target="_blank">Python Docs</a>
       <address> Written by:<br />
-      Steven Speek and Benjamin Mezger<br />
+      <a href="https://profiles.google.com/slspeek/about" target="_blank">Steven Speek</a> and <a href="http://ephexeve.blogspot.com/" target="_blank">Benjamin Mezger</a><br />
       2011</address>
     </form>
   </body>
