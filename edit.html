@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+   <form action="/sign" method="post">
+      <div>Filename<input type="hidden" value="{{ id }}" name="id"></input>
+      <input type="text" name="file_name" value="{{ file.file_name }}"></div>
+     <p>Code:</p> 
+     <div><textarea name="content" rows="10" cols="60">{{ file.content }}</textarea></div>
+      <p>Result:</p>
+      <div><textarea name="output" rows="10" cols="60">{{ output }}</textarea></div>
+      <p>Exceptions:</p>
+      <div><textarea name="error" rows="10" cols="60">{{ exception }}</textarea></div>
+      <div><input type="submit" value="Save and go!"></div>
+    </form>
+{% endblock %}
+
+
+
+

@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% for file in files %}
+     <a href="/edit?id={{ file.id }}"> <h3>{{ file.file_name }}</h3> </a>
+    {% endfor %}
+{% endblock %}
+
