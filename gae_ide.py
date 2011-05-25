@@ -13,7 +13,7 @@ from google.appengine.ext.webapp import template
 
 class File(db.Model):
   author = db.UserProperty()
-  content = db.StringProperty(multiline=True)
+  content = db.StringProperty(multiline=True, required=True)
   file_name = db.StringProperty()
   creation_date = db.DateTimeProperty(auto_now_add=True)
 
@@ -43,7 +43,7 @@ class EditPage(webapp.RequestHandler):
   def get(self):
     my_id = self.request.get('id')
     if my_id == 'new':
-        my_file = File()
+        my_file = File(content='print 3 * "Hi"')
     else:
         my_file = File.get_by_id(int(my_id))
 
@@ -54,7 +54,7 @@ class EditPage(webapp.RequestHandler):
     sys.stdout = capture
     
     # extract the statement to be run
-    statement = self.request.get('statement')
+    statement = my_file.content
     logging.info('#'+statement)
 
     # the python compiler doesn't like network line endings
@@ -88,14 +88,13 @@ class Gae_Ide(webapp.RequestHandler):
   def post(self):
      my_id = self.request.get('id')
      if my_id == 'new':
-       
-       my_file = File()
+       my_file = File(content = self.request.get('statement'))
      else:
-        my_file = File.get_by_id(int(my_id))
+       my_file = File.get_by_id(int(my_id))
+       my_file.content = self.request.get('statement')
      if users.get_current_user():
        my_file.author = users.get_current_user()
 
-     my_file.content = self.request.get('content')
      my_file.file_name = self.request.get('file_name')
      my_file.put()
      self.redirect('/edit?id=' + str(my_file.key().id()))
