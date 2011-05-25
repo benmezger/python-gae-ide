@@ -2,6 +2,8 @@ import cgi
 import os
 import sys
 import StringIO
+import traceback
+import logging
 
 from google.appengine.api import users
 from google.appengine.ext import webapp
@@ -47,28 +49,37 @@ class EditPage(webapp.RequestHandler):
 
     SAVEDOUT = sys.stdout
     
+    capture = StringIO.StringIO()
+
+    sys.stdout = capture
+    
+    # extract the statement to be run
+    statement = self.request.get('statement')
+    logging.info('#'+statement)
+
+    # the python compiler doesn't like network line endings
+    statement = statement.replace('\r\n', '\n')
+
+    # add a couple newlines at the end of the statement. this makes
+    # single-line expressions such as 'class Foo: pass' evaluate happily.
+    statement += '\n\n'
+
+    # log and compile the statement up front
     try:
-      content = my_file.content.strip()
-      capture = StringIO.StringIO()
-      sys.stdout = capture
-      
-      exec(content)
-
+      logging.info('Compiling and evaluating:\n%s' % statement)
+      compiled = compile(statement, '<string>', 'exec')
+      exec (compiled)
       out = str(capture.getvalue())
-
-      
-      exception = 'No error found, try harder'
-    except Exception, e:
-      exception = e
-      out = 'Exception occurred see below'
+    except:
+      self.response.out.write(traceback.format_exc())
+      return
     finally:
       sys.stdout = SAVEDOUT
       
     template_values = {
       'id': my_id,
       'file': my_file,
-      'output': out,
-      'exception': exception
+      'output': out
     }
     path = os.path.join(os.path.dirname(__file__), 'edit.html')
     self.response.out.write(template.render(path, template_values))
@@ -94,6 +105,7 @@ application = webapp.WSGIApplication(
                                       ('/sign', Gae_Ide),
                                       ('/edit', EditPage)],
                                      debug=True)
+
 
 def main():
   run_wsgi_app(application)
