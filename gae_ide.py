@@ -34,6 +34,8 @@ class MainPage(webapp.RequestHandler):
       'files': files,
       'url': url,
       'url_linktext': url_linktext,
+      'python_version': sys.version,
+      'server_software': os.environ['SERVER_SOFTWARE']
       }
 
     path = os.path.join(os.path.dirname(__file__), 'index.html')
