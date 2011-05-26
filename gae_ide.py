@@ -20,6 +20,8 @@ class File(db.Model):
 class MainPage(webapp.RequestHandler):
   def get(self):
     files_query = File.all().order('-creation_date')
+    author = users.get_current_user()
+    files_query.filter("author", author)
     files = files_query.fetch(10)
     for f in files:
       f.id = f.key().id()
@@ -45,7 +47,8 @@ class EditPage(webapp.RequestHandler):
   def get(self):
     my_id = self.request.get('id')
     if my_id == 'new':
-        my_file = File(content='print 3 * "Hi"')
+        author = users.get_current_user()
+        my_file = File(content='print 3 * "Hi"', author=author)
     else:
         my_file = File.get_by_id(int(my_id))
 
