@@ -87,7 +87,9 @@ class EditPage(webapp.RequestHandler):
       'id': my_id,
       'file': my_file,
       'output': out,
-      'exception': exc
+      'exception': exc,
+      'python_version': sys.version,
+      'server_software': os.environ['SERVER_SOFTWARE']
     }
     path = os.path.join(os.path.dirname(__file__), 'edit.html')
     self.response.out.write(template.render(path, template_values))
