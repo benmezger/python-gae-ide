@@ -1,3 +1,4 @@
+
 import cgi
 import os
 import sys
@@ -70,26 +71,21 @@ class EditPage(webapp.RequestHandler):
     statement += '\n\n'
 
     # log and compile the statement up front
-    exc = ''
-    out = ''
     try:
       logging.info('Compiling and evaluating:\n%s' % statement)
       compiled = compile(statement, '<string>', 'exec')
       exec (compiled)
       out = str(capture.getvalue())
     except:
-      exc = traceback.format_exc()
-
+      self.response.out.write(traceback.format_exc())
+      return
     finally:
       sys.stdout = SAVEDOUT
       
     template_values = {
       'id': my_id,
       'file': my_file,
-      'output': out,
-      'exception': exc,
-      'python_version': sys.version,
-      'server_software': os.environ['SERVER_SOFTWARE']
+      'output': out
     }
     path = os.path.join(os.path.dirname(__file__), 'edit.html')
     self.response.out.write(template.render(path, template_values))
